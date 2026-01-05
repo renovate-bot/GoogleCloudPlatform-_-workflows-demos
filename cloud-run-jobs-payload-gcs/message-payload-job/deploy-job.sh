@@ -24,7 +24,9 @@ gcloud artifacts repositories create cloud-run-jobs --repository-format=docker -
 gcloud auth configure-docker $REGION-docker.pkg.dev
 IMAGE_NAME=$REGION-docker.pkg.dev/${PROJECT_ID}/cloud-run-jobs/${JOB_NAME}:latest
 
-INPUT_BUCKET=message-payload-${PROJECT_ID}
+# Use `uuidgen` to generate a unique name for your Cloud Storage bucket
+UNIQUE_ID=$(uuidgen | tr 'A-Z' 'a-z')
+INPUT_BUCKET=message-payload-${UNIQUE_ID}
 
 echo "Configure gcloud to use $REGION for Cloud Run"
 gcloud config set run/region ${REGION}
